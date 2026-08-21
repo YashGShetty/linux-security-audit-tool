@@ -1,6 +1,9 @@
 #!/bin/bash
 ## This script performs a basic security audit of a Linux system
 
+LOGFILE="audit_report_$(date +%F_%H-%M-%S).txt"
+exec > >(tee -a "$LOGFILE") 2>&1
+
 echo "===== LINUX SECURITY AUDIT ====="
 echo "Run on: $(date)"
 ##sleep 2

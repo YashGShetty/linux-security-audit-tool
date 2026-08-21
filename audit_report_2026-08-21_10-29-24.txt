@@ -1,0 +1,20 @@
+===== LINUX SECURITY AUDIT =====
+Run on: Friday 21 August 2026 10:29:24 AM IST
+
+[1] Checking for users with UID 0 (root privileges)...
+  [0;32m[PASS][0m Only root has UID 0
+
+[2] Checking SSH configuration...
+  [0;32m[PASS][0m  Root login is restricted or not explicitly enabled
+  [0;32m[PASS][0m  Password authentication is disabled or not explicitly enabled
+
+[3] Checking for world-writable files in /etc...
+  [0;32m[PASS][0m  No world-writable files found in /etc
+
+[4] Checking users with sudo privileges...
+  [0;32m[PASS][0m  Users with sudo access: yash
+
+[5] Checking recent failed login attempts...
+  [0;32m[PASS][0m  No recent failed login attempts found
+
+===== SECURITY SCORE: 6/6 =====[0m
