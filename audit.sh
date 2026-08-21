@@ -5,8 +5,9 @@ LOGFILE="audit_report_$(date +%F_%H-%M-%S).txt"
 exec > >(tee -a "$LOGFILE") 2>&1
 
 echo "===== LINUX SECURITY AUDIT ====="
+sleep 1
 echo "Run on: $(date)"
-##sleep 2
+sleep 2
 ##Checking for root users
 
 RED='\033[0;31m'
@@ -43,33 +44,33 @@ if [[ "$root_users" == "root" ]]; then
 else
     fail "Unexpected UID 0 accounts found: $root_users"
 fi
-##sleep 2
+sleep 2
 
 ##Checking for ssh misconfigs
 
 echo ""
 echo "[2] Checking SSH configuration..."
-##sleep 2
+sleep 2
 
 if grep -q "^PermitRootLogin yes" /etc/ssh/sshd_config 2>/dev/null; then
     fail " Root login via SSH is permitted"
 else
     pass " Root login is restricted or not explicitly enabled"
 fi
-##sleep 1.5
+sleep 1.5
 
 if grep -q "^PasswordAuthentication yes" /etc/ssh/sshd_config 2>/dev/null; then
     fail " Password authentication is enabled (key-based login is safer)"
 else
     pass " Password authentication is disabled or not explicitly enabled"
 fi
-##sleep 2
+sleep 2
 
 ##checking for world-executable files
 
 echo ""
 echo "[3] Checking for world-writable files in /etc..."
-##sleep 2
+sleep 2
 
 world_writable=$(find /etc -xdev -type f -perm -0002 2>/dev/null)
 
@@ -81,13 +82,13 @@ else
         echo "    - $f"
     done
 fi
-##sleep 2
+sleep 2
 
 ##checking for admin privileges 
 
 echo ""
 echo "[4] Checking users with sudo privileges..."
-##sleep 2
+sleep 2
 
 sudo_users=$(getent group sudo | cut -d: -f4)
 
@@ -96,12 +97,13 @@ if [[ -z "$sudo_users" ]]; then
 else
     pass " Users with sudo access: $sudo_users"
 fi
-##sleep 2
+sleep 2
 
 ##checking for failed logging attempts
 
 echo ""
 echo "[5] Checking recent failed login attempts..."
+sleep 2
 
 failed_logins=$(grep "Failed password" /var/log/auth.log 2>/dev/null | tail -5)
 
@@ -111,6 +113,7 @@ else
     warn " Recent failed login attempts:"
     echo "$failed_logins"
 fi
+
 
 echo ""
 echo -e "${BOLD}${MAGENTA}===== SECURITY SCORE: $score/$total =====${NC}"
